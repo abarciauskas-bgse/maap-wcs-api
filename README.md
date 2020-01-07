@@ -21,6 +21,18 @@ export FLASK_ENV=development
 flask run
 ```
 
+## Running on AWS EC2
+
+* Launch and log in to Miniconda with Python 3(ami-062c42cbecc1d5ec0)
+* `sudo yum install git -y`
+* Export AWS credentials
+* Run same commands as in section above for local install, git clone etc.
+* Run in background
+
+```
+nohup flask run --host=0.0.0.0 > 1.txt 2>&1 &
+```
+
 ## Example requests
 
 ```
