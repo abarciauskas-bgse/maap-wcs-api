@@ -1,4 +1,5 @@
 *.tif
-AP_01645_FBS_F7010_RT1.zip lambda-package.zip
+*.zip
 dask-worker-space/
 *.zip
+flaskapp/__pycache__/

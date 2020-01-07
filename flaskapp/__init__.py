@@ -33,11 +33,11 @@ def subset(collectionid, bbox_params):
         else:
             raise 'No file found'
         granules_urls.append(file_url.replace('s3://','/vsis3/'))
-
+    granules_urls = list(filter(lambda url: 'tif' in url, granules_urls))
     # TEMPORARY: Limit merging to something
     granules_urls = granules_urls[0:2]
-    subprocess.check_output(['rio','merge', *granules_urls, 'merged.tif', '--overwrite'])
-    subprocess.check_output(['rio', 'clip', 'merged.tif', 'output.tif', '--bounds', bounds, '--overwrite'])
+    print(subprocess.check_output(['rio','merge', *granules_urls, 'merged.tif', '--overwrite']))
+    subprocess.check_output(['rio', 'clip', 'merged.tif', 'output.tif', '--bounds', bbox, '--overwrite'])
     # result = subprocess.check_output(['rio', 'info', 'output.tif', '--indent', '2', '--verbose'])
     data = rasterio.open('output.tif').read()
     return {
@@ -45,22 +45,14 @@ def subset(collectionid, bbox_params):
             'dataBlock': data.tolist()
             }
 
-# should there be a good way to remove nodata value
-event = {
-    'resource': 'rangeset',
-    'queryStringParameters': {
-        'bounding_box': '9.1,0.4,9.8,0.6'
-    },
-    'pathParameters': {
-        'collectionid': 'AFLVIS2'
-    }
-}
 # print(lambda_handler(event, None))
 # TODO:
 # (other servers) Create CMR provider for pygeoapi
-# (my server) Package + Deploymment to AWS
-# Implement RangeSetRefType (for RangeSet response)
-# Implement other endpoints
+# (my server)
+# - Package + Deploymment to AWS
+# - should there be a good way to remove nodata value
+# - Implement RangeSetRefType (for RangeSet response)
+# - Implement other endpoints
 
 def create_app(test_config=None):
     # create and configure the app
