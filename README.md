@@ -28,4 +28,4 @@ http://35.168.23.55:5000/collections/AfriSAR_UAVSAR_Coreg_SLC/coverage/rangeset?
 http://35.168.23.55:5000/collections/AFLVIS2/coverage/rangeset?bounding_box=10,-0.5,11,0
 ```
 
-![screenshot](Screen Shot 2020-01-07 at 3.52.45 PM.png)
+!(screenshot)[Screen Shot 2020-01-07 at 3.52.45 PM.png]
