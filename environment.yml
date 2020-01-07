@@ -1,0 +1,12 @@
+name: maap-wcs-api
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - requests
+  - pip
+  - rasterio
+  - xarray
+  - dask
+  - flask
+
