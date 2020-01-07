@@ -20,7 +20,7 @@ def domain_set(event):
 
 def subset(collectionid, bbox_params):
     bbox = bbox_params.replace(',', ' ')
-    resp = requests.get(f"{base_maap_url}/granules.json?short_name={collectionid}&bounding_box={bbox_params}")
+    resp = requests.get(f"{base_maap_url}/granules.json?short_name={collectionid}&bounding_box={bbox_params}&page_size=200")
     granules = json.loads(resp.content)['feed']['entry']
     granules_urls = []
     for g in granules:
@@ -37,9 +37,9 @@ def subset(collectionid, bbox_params):
     # TEMPORARY: Limit merging to something
     granules_urls = granules_urls[0:2]
     print(subprocess.check_output(['rio','merge', *granules_urls, 'merged.tif', '--overwrite']))
-    subprocess.check_output(['rio', 'clip', 'merged.tif', 'output.tif', '--bounds', bbox, '--overwrite'])
-    # result = subprocess.check_output(['rio', 'info', 'output.tif', '--indent', '2', '--verbose'])
+    subprocess.check_output(['rio', 'clip', 'merged.tif', 'output.tif', '--bounds', bbox])
     data = rasterio.open('output.tif').read()
+    subprocess.check_output(['rm', 'output.tif', 'merged.tif'])
     return {
             'type': 'RangeSetType',
             'dataBlock': data.tolist()
